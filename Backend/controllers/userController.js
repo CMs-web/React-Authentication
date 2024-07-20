@@ -19,7 +19,6 @@ const register = async(req, res) => {
     return res.status(200).json(user).select("-password")
 }
 
-
 const login = async(req, res) => {
     const { email, password } = req.body;
     if (!email || !password) {

@@ -6,11 +6,11 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api': {
-        target: 'https://auth-backend-93eo.onrender.com',
+      "/api": {
+        target: "http://localhost:5173",
         changeOrigin: true,
-        secure : false,
-      }
-    }
-  }
-})
+        secure: false,
+      },
+    },
+  },
+});
