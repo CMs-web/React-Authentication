@@ -1,14 +1,5 @@
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import {isLogInbtn } from "../features/userSlice";
 
-const LogOut = () => {
-    const dispatch = useDispatch()
-    
-    useEffect(() => {
-        dispatch(isLogInbtn(false))
-        return ()=> dispatch(isLogInbtn(true))
-    }, [])
+const LogIn = () => {
     
     return (
       <div className="container p-5">
@@ -43,4 +34,4 @@ const LogOut = () => {
     );
 };
 
-export default LogOut;
+export default LogIn;

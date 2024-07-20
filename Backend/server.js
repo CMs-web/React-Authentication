@@ -1,15 +1,15 @@
-const express = require("express")
-const app = express()
+const express = require("express");
+const connectDb = require("./config/db_config");
+const app = express();
 
-require("dotenv").config()
+require("dotenv").config();
 
-app.get("/", (req, res) => res.json({ "msg": "WELCOME TO AUTH"}))
+// connetDataBase
+connectDb()
 
-
-
-const PORT = process.env.PORT || 5000
-app.listen(PORT,()=>console.log('Server is listning'))
-
+app.get("/", (req, res) => res.send("WELCOME TO AUTH"));
 
 
 
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log("Server is listning"));

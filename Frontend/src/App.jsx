@@ -1,31 +1,26 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
 import AppLayout from "./pages/AppLayout";
 import Register from "./pages/Register";
-import LogOut from "./pages/LogOut";
 import Home from "./pages/Home";
+import LogIn from "./pages/LogIn";
 
-const router = createBrowserRouter([
-  {
-    element: <AppLayout />,
-    children: [
-      {
-        path: "/",
-        element: <Home />,
-      },
-      {
-        path: "/register",
-        element: <Register />,
-      },
-      {
-        path: "/login",
-        element: <LogOut />,
-      },
-    ],
-  },
-]);
 
 const App = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route element={<AppLayout />}>
+          <Route path="/" exect element={<Home />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<LogIn />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 };
 
 export default App;
