@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { getResiter } from "../features/userSlice";
+import toast from "react-hot-toast";
 
 const Register = () => {
   const dispatch = useDispatch()
@@ -24,6 +25,9 @@ const Register = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (password !== password2){
+      return toast.error("Passwords not Matched")
+    }
     dispatch(getResiter(formData));
     setFormData({
       name: "",

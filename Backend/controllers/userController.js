@@ -7,9 +7,9 @@ const register = async (req, res) => {
     return res.status(400).json({ msg: "please fill all fields" });
   }
 
-  const userExists = await User.findOne({ email })
+  const userExists = await User.findOne({ email });
   if (userExists) {
-    return res.status(400).json({'msg' : "user already Exists"})
+    return res.status(400).json({ msg: "user already Exists" });
   }
 
   const salt = bcrypt.genSaltSync(10);
@@ -36,10 +36,14 @@ const login = async (req, res) => {
     return res.status(400).json({ msg: "please fill all fields" });
   }
 
-  const user = await User.find({ email }).select("-password");
+  const user = await User.findOne({ email });
 
   if (user && bcrypt.compareSync(password, user.password)) {
-    return res.status(200).json(user);
+    return res.status(200).json({
+      id: user._id,
+      name: user.name,
+      email: user.email,
+    });
   } else {
     return res.status(404).json({
       msg: "invalid Credentials",

@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import LogIn from "./pages/LogIn";
 import { Provider } from "react-redux";
 import store from "./features/store";
+import {Toaster} from "react-hot-toast"
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           </Route>
         </Routes>
       </BrowserRouter>
+      <Toaster/>
     </Provider>
   );
 };
