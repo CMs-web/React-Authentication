@@ -1,10 +1,10 @@
-import { createAsyncThunk, createSlice, isPending } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, } from "@reduxjs/toolkit";
 import userService from "./userService";
 
 const user = createSlice({
     name: "user",
     initialState: {
-        user: null,
+        user: [],
         isPending: false,
         isSuccess: false,
         isError : false,
@@ -17,6 +17,17 @@ const user = createSlice({
             state.isSuccess = false;
             state.isError = false;
         })
+        .addCase(getResiter.fulfilled, (state,action) => {
+            state.isPending = false;
+            state.isSuccess = false;
+            state.isError = false;
+            state.user = action.payload
+        })
+        .addCase(getResiter.rejected, (state) => {
+            state.isPending = true;
+            state.isSuccess = false;
+            state.isError = true;
+        })
     }
 })
 
@@ -27,4 +38,6 @@ export const getResiter = createAsyncThunk("REGISTER/USER", async (formdata, thu
         return thunkAPI.rejectWithValue(error)
     }
 })
+
+export default user.reducer
 

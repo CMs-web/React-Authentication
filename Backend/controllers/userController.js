@@ -1,39 +1,50 @@
-const User = require("../model/userModel")
-const bcrypt = require("bcrypt")
+const User = require("../model/userModel");
+const bcrypt = require("bcrypt");
 
-const register = async(req, res) => {
-    const { name, email, password } = req.body;
-    if (!name || !email || !password) {
-        return res.status(400).json({msg : "please fill all fields"})
-    }
+const register = async (req, res) => {
+  const { name, email, password } = req.body;
+  if (!name || !email || !password) {
+    return res.status(400).json({ msg: "please fill all fields" });
+  }
 
-    const salt = bcrypt.genSaltSync(10)
-    const hashedPassword = bcrypt.hashSync(password,salt)
+  const userExists = await User.findOne({ email })
+  if (userExists) {
+    return res.status(400).json({'msg' : "user already Exists"})
+  }
 
-    const user = await User.create({
-        name,
-        email,
-        password : hashedPassword
-    })
+  const salt = bcrypt.genSaltSync(10);
+  const hashedPassword = bcrypt.hashSync(password, salt);
 
-    return res.status(200).json(user).select("-password")
-}
+  const user = await User.create({
+    name,
+    email,
+    password: hashedPassword,
+  });
 
-const login = async(req, res) => {
-    const { email, password } = req.body;
-    if (!email || !password) {
-        return res.status(400).json({msg : "please fill all fields"})
-    }
+  if (user) {
+    const userObject = user.toObject();
+    delete userObject.password;
+    return res.status(200).json(userObject);
+  } else {
+    return res.status(400).json({ msg: "Something went wrong" });
+  }
+};
 
-    const user = await User.find({ email })
+const login = async (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    return res.status(400).json({ msg: "please fill all fields" });
+  }
 
-    if (user && bcrypt.compareSync(password, user.password)) {
-      return res.status(200).json(user).select("-password");
-    } else {
-      return res.status(404).json({
-        msg: "Try to Register First",
-      });
-    }
-}
+  const user = await User.find({ email }).select("-password");
 
-module.exports = {register, login}
+  if (user && bcrypt.compareSync(password, user.password)) {
+    return res.status(200).json(user);
+  } else {
+    return res.status(404).json({
+      msg: "invalid Credentials",
+    });
+  }
+};
+
+module.exports = { register, login };

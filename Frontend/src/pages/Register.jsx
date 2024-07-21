@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { getResiter } from "../features/userSlice";
 
 const Register = () => {
+  const dispatch = useDispatch()
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -8,13 +11,23 @@ const Register = () => {
     password2: "",
   });
 
+  const handleChange = (e) => {
+     setFormData((prev) => {
+       return {
+         ...prev,
+         [e.target.name]: e.target.value,
+       };
+     });
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    setFormData((prev) => {
-      return {
-        ...prev,
-        [event.target.name]: event.target.value,
-      };
+    dispatch(getResiter(formData));
+    setFormData({
+      name: "",
+      email: "",
+      password: "",
+      password2: "",
     });
   };
 
@@ -31,6 +44,7 @@ const Register = () => {
             className="form-control"
             id="name"
             aria-describedby="emailHelp"
+            onChange={(e) => handleChange(e)}
           />
         </div>
         <div className="mb-1">
@@ -43,6 +57,7 @@ const Register = () => {
             className="form-control"
             id="email"
             aria-describedby="emailHelp"
+            onChange={(e) => handleChange(e)}
           />
           <div id="emailHelp" className="form-text">
             We never share your email with anyone else.
@@ -57,6 +72,7 @@ const Register = () => {
             name="password"
             className="form-control"
             id="password"
+            onChange={(e) => handleChange(e)}
           />
         </div>
         <div className="mb-2">
@@ -68,6 +84,7 @@ const Register = () => {
             name="password2"
             className="form-control"
             id="password2"
+            onChange={(e) => handleChange(e)}
           />
         </div>
 
