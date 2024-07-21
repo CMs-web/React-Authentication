@@ -23,10 +23,10 @@ const user = createSlice({
             state.isError = false;
             state.user = action.payload
         })
-        .addCase(getResiter.rejected, (state) => {
+        .addCase(getResiter.rejected, (state,action) => {
             state.isPending = true;
             state.isSuccess = false;
-            state.isError = true;
+            state.isError = action.payload;
         })
     }
 })
@@ -35,7 +35,7 @@ export const getResiter = createAsyncThunk("REGISTER/USER", async (formdata, thu
     try {
         return await userService.register(formdata)
     } catch (error) {
-        return thunkAPI.rejectWithValue(error)
+        return thunkAPI.rejectWithValue(error.response.data.msg)
     }
 })
 
