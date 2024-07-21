@@ -11,6 +11,8 @@ const Register = () => {
     password2: "",
   });
 
+  const { name, email, password, password2 } = formData;
+
   const handleChange = (e) => {
      setFormData((prev) => {
        return {
@@ -44,6 +46,7 @@ const Register = () => {
             className="form-control"
             id="name"
             aria-describedby="emailHelp"
+            value={name}
             onChange={(e) => handleChange(e)}
           />
         </div>
@@ -57,6 +60,7 @@ const Register = () => {
             className="form-control"
             id="email"
             aria-describedby="emailHelp"
+            value={email}
             onChange={(e) => handleChange(e)}
           />
           <div id="emailHelp" className="form-text">
@@ -72,6 +76,7 @@ const Register = () => {
             name="password"
             className="form-control"
             id="password"
+            value={password}
             onChange={(e) => handleChange(e)}
           />
         </div>
@@ -84,6 +89,7 @@ const Register = () => {
             name="password2"
             className="form-control"
             id="password2"
+            value={password2}
             onChange={(e) => handleChange(e)}
           />
         </div>
