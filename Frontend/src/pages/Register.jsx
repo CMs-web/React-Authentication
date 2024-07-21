@@ -1,10 +1,13 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { getResiter } from "../features/userSlice";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user } = useSelector((state) => state.user);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -12,21 +15,27 @@ const Register = () => {
     password2: "",
   });
 
+  useEffect(() => {
+    if (user) {
+      return navigate("/");
+    }
+  }, [user, navigate]);
+
   const { name, email, password, password2 } = formData;
 
   const handleChange = (e) => {
-     setFormData((prev) => {
-       return {
-         ...prev,
-         [e.target.name]: e.target.value,
-       };
-     });
-  }
+    setFormData((prev) => {
+      return {
+        ...prev,
+        [e.target.name]: e.target.value,
+      };
+    });
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (password !== password2){
-      return toast.error("Passwords not Matched")
+    if (password !== password2) {
+      return toast.error("Passwords not Matched");
     }
     dispatch(getResiter(formData));
     setFormData({

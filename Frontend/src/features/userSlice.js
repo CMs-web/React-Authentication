@@ -2,10 +2,12 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import userService from "./userService";
 import toast from "react-hot-toast";
 
+const userExists = JSON.parse(localStorage.getItem("user"))?? null;
+
 const user = createSlice({
   name: "user",
   initialState: {
-    user: [],
+    user: userExists,
     isPending: false,
     isSuccess: false,
     isError: false,

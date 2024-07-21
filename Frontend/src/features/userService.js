@@ -1,5 +1,4 @@
 import axios from "axios";
-
 const URL = "/api/user";
 
 const register = async (formdata) => {

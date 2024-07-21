@@ -1,9 +1,19 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { getLogin } from "../features/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const LogIn = () => {
+  const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      return navigate("/");
+    }
+  }, [user,navigate]);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -43,7 +53,7 @@ const LogIn = () => {
             aria-describedby="emailHelp"
             name="email"
             value={email}
-            onChange={(e)=>handleChange(e)}
+            onChange={(e) => handleChange(e)}
           />
         </div>
         <div className="mb-2">
@@ -56,7 +66,7 @@ const LogIn = () => {
             id="exampleInputPassword1"
             name="password"
             value={password}
-            onChange={(e)=>handleChange(e)}
+            onChange={(e) => handleChange(e)}
           />
         </div>
         <button type="submit" className="btn btn-primary">
